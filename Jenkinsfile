@@ -18,11 +18,24 @@ pipeline {
                     node --version
                     npm ci
                     npm run build
-                    echo "Performing the test"
-                    ls ./build
-                    npm test
                 '''
             }
+        }
+        stage('Test'){
+            agent{
+                docker{
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps{
+            sh '''
+                echo "Performing the test"
+                test -f build/index.html
+                ls ./build
+                npm test
+            '''
+           } 
         }
     }
 }
