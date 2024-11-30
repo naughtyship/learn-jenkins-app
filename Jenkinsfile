@@ -20,6 +20,13 @@ pipeline {
                     npm run build
                 '''
             }
+            steps {
+                sh '''
+                    echo "Performing the test"
+                    ls ./build
+                    npm test
+                '''
+            }
         }
     }
 }
